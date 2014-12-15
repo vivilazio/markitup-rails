@@ -20,3 +20,11 @@ Viewer.prototype.render = function() {
 Viewer.prototype.renderer = function(elemId) {
   $(elemId).html(this.render());
 }
+
+window.Viewer = viewer;
+
+var bootstrapEditor = function() {
+  return '<li class="markItUpButton markItUpButton'+t+(i)+' '+(button.className||'')+'"><a href="" '+key+' title="'+title+'">'+(button.name||'')+'</a></li>';
+}
+
+window.template = bootstrapEditor;
