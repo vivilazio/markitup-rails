@@ -5,7 +5,7 @@ var Viewer = function(template, view) {
 
 Viewer.prototype.render = function() {
   var k;
-  for k in this.view {
+  for (k in this.view) {
     var v = this.view[k];
     if (typeof v === 'function') {
       valore = this.view[k]();
