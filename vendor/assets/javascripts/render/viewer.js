@@ -21,7 +21,7 @@ Viewer.prototype.renderer = function(elemId) {
   $(elemId).html(this.render());
 }
 
-window.Viewer = viewer;
+window.Viewer = Viewer;
 
 var bootstrapEditor = function() {
   return '<li class="markItUpButton markItUpButton'+t+(i)+' '+(button.className||'')+'"><a href="" '+key+' title="'+title+'">'+(button.name||'')+'</a></li>';
