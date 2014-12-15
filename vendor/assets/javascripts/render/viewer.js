@@ -1,7 +1,7 @@
 var Viewer = function(template, view) {
   this.template = template;
   this.view = view;
-}
+};
 
 Viewer.prototype.render = function() {
   var k;
@@ -14,17 +14,14 @@ Viewer.prototype.render = function() {
     }
     this[k] = valore;
   }
+  console.log(this);
   return this.template();
-}
-
-Viewer.prototype.renderer = function(elemId) {
-  $(elemId).html(this.render());
-}
+};
 
 window.Viewer = Viewer;
 
 var bootstrapEditor = function() {
-  return '<li class="markItUpButton markItUpButton'+t+(i)+' '+(button.className||'')+'"><a href="" '+key+' title="'+title+'">'+(button.name||'')+'</a></li>';
-}
+  return '<li class="markItUpButton markItUpButton'+this.t+(this.i)+' '+this.className+'"><a href="" '+this.key+' title="'+this.title+'" class="btn btn-sm btn-default">'+this.name+'</a></li>';
+};
 
 window.template = bootstrapEditor;
