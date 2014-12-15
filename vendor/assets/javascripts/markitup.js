@@ -214,7 +214,7 @@
 						var contentViewer = {
 							className: (button.className||''),
 							title: title,
-							t, t,
+							t: t,
 							key: key,
 							i: i,
 							name: button.name
