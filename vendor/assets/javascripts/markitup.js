@@ -52,7 +52,18 @@
 		onShiftEnter:			{},
 		onCtrlEnter:			{},
 		onTab:					{},
-		markupSet:			[	{ /* set */ } ]
+		markupSet:			[	{ /* set */ } ],
+		contentViewer: function(button, title, t, key, i) {
+			return {
+				className: (button.className||''),
+				title: title,
+				t: t,
+				key: key,
+				i: i,
+				name: (button.name||'')
+			}
+		},
+		template: $.markItUp.templates.default
 	};
 	$.extend(options, settings, extraSettings);
 
@@ -211,15 +222,7 @@
 								for (j = levels.length -1; j >= 0; j--) {
 									t += levels[j]+"-";
 								}
-								var contentViewer = {
-									className: (button.className||''),
-									title: title,
-									t: t,
-									key: key,
-									i: i,
-									name: (button.name||'')
-								}
-								var viewer = new Viewer(window.template, contentViewer)
+								var viewer = new $.markItUp.Viewer(options.template, options.contentViewer(button, title, t, key, i));
 								li = $(viewer.render())
 								.bind("contextmenu.markItUp", function() { // prevent contextmenu on mac and allow ctrl+click
 									return false;
@@ -657,18 +660,5 @@ $.fn.markItUpRemove = function() {
 		$(this).markItUp('remove');
 	}
 );
-};
-
-$.markItUp = function(settings) {
-	var options = { target:false };
-	$.extend(options, settings);
-	if (options.target) {
-		return $(options.target).each(function() {
-			$(this).focus();
-			$(this).trigger('insertion', [options]);
-		});
-	} else {
-		$('textarea').trigger('insertion', [options]);
-	}
 };
 })(jQuery);
