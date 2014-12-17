@@ -53,16 +53,6 @@
 		onCtrlEnter:			{},
 		onTab:					{},
 		markupSet:			[	{ /* set */ } ],
-		contentViewer: function(button, title, t, key, i) {
-			return {
-				className: (button.className||''),
-				title: title,
-				t: t,
-				key: key,
-				i: i,
-				name: (button.name||'')
-			}
-		},
 		template: $.markItUp.templates.default
 	};
 	$.extend(options, settings, extraSettings);
@@ -222,7 +212,9 @@
 								for (j = levels.length -1; j >= 0; j--) {
 									t += levels[j]+"-";
 								}
-								var viewer = new $.markItUp.Viewer(options.template, options.contentViewer(button, title, t, key, i));
+								button.t = t;
+								button.i = i;
+								var viewer = new $.markItUp.Viewer(options.template,button);
 								li = $(viewer.render())
 								.bind("contextmenu.markItUp", function() { // prevent contextmenu on mac and allow ctrl+click
 									return false;

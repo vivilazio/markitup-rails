@@ -39,7 +39,7 @@
   $.markItUp.Viewer = Viewer;
 
   var bootstrapEditor = function() {
-    return '<li class="markItUpButton markItUpButton'+this.t+(this.i)+' '+this.className+'"><a href="" '+this.key+' title="'+this.title+'" class="btn btn-sm btn-default">'+this.name+'</a></li>';
+    return '<li class="markItUpButton markItUpButton'+this.t+(this.i)+' '+(this.className||'')+'"><a href="" '+(this.key ? 'accesskey="'+this.key+'"' : '')+' title="'+(this.key ? (this.name||'')+' [Ctrl+'+this.key+']' : '')+'" class="btn btn-sm btn-default">'+this.name+'</a></li>';
   };
 
   $.markItUp.templates = {};
