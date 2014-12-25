@@ -12,12 +12,12 @@
     }
   };
 
-  var Viewer = function(template, view) {
+  var ElementViewer = function(template, view) {
     this.template = template;
     this.view = view;
   };
 
-  Viewer.prototype.render = function() {
+  ElementViewer.prototype.render = function() {
     var k;
     for (k in this.view) {
       var v = this.view[k];
@@ -28,18 +28,17 @@
       }
       this[k] = valore;
     }
-    console.log(this);
     return this.template();
   };
 
-  Viewer.prototype.renderer = function(elemId) {
+  ElementViewer.prototype.renderer = function(elemId) {
     $(elemId).html(this.render());
   };
 
-  $.markItUp.Viewer = Viewer;
+  $.markItUp.ElementViewer = ElementViewer;
 
   var bootstrapEditor = function() {
-    return '<li class="markItUpButton markItUpButton'+this.t+(this.i)+' '+(this.className||'')+'"><a href="" '+(this.key ? 'accesskey="'+this.key+'"' : '')+' title="'+(this.key ? (this.name||'')+' [Ctrl+'+this.key+']' : '')+'" class="btn btn-sm btn-default">'+this.name+'</a></li>';
+    return '<li class="markItUpButton markItUpButton'+this.i+' '+(this.className||'')+'"><a href="" '+(this.key ? 'accesskey="'+this.key+'"' : '')+' title="'+(this.key ? (this.name||'')+' [Ctrl+'+this.key+']' : '')+'" class="btn btn-sm btn-default">'+this.name+'</a></li>';
   };
 
   $.markItUp.templates = {};

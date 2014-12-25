@@ -152,28 +152,6 @@
 						header = $('<div class="markItUpHeader"></div>').insertBefore($$);
 						$(dropMenus(options.markupSet)).appendTo(header);
 
-						// add the footer after the textarea
-						footer = $('<div class="markItUpFooter"></div>').insertAfter($$);
-
-						// add the resize handle after textarea
-						if (options.resizeHandle === true && browser.safari !== true) {
-							resizeHandle = $('<div class="markItUpResizeHandle"></div>')
-							.insertAfter($$)
-							.bind("mousedown.markItUp", function(e) {
-								var h = $$.height(), y = e.clientY, mouseMove, mouseUp;
-								mouseMove = function(e) {
-									$$.css("height", Math.max(20, e.clientY+h-y)+"px");
-									return false;
-								};
-								mouseUp = function(e) {
-									$("html").unbind("mousemove.markItUp", mouseMove).unbind("mouseup.markItUp", mouseUp);
-									return false;
-								};
-								$("html").bind("mousemove.markItUp", mouseMove).bind("mouseup.markItUp", mouseUp);
-							});
-							footer.append(resizeHandle);
-						}
-
 						// listen key events
 						$$.bind('keydown.markItUp', keyPressed).bind('keyup', keyPressed);
 
@@ -202,19 +180,13 @@
 						var ul = $('<ul></ul>'), i = 0;
 						$('li:hover > ul', ul).css('display', 'block');
 						$.each(markupSet, function() {
-							var button = this, t = '', title, li, j;
-							title = (button.key) ? (button.name||'')+' [Ctrl+'+button.key+']' : (button.name||'');
-							key   = (button.key) ? 'accesskey="'+button.key+'"' : '';
+							var button = this, li;
 							if (button.separator) {
 								li = $('<li class="markItUpSeparator">'+(button.separator||'')+'</li>').appendTo(ul);
 							} else {
 								i++;
-								for (j = levels.length -1; j >= 0; j--) {
-									t += levels[j]+"-";
-								}
-								button.t = t;
 								button.i = i;
-								var viewer = new $.markItUp.Viewer(options.template,button);
+								var viewer = new $.markItUp.ElementViewer(options.template,button);
 								li = $(viewer.render())
 								.bind("contextmenu.markItUp", function() { // prevent contextmenu on mac and allow ctrl+click
 									return false;
