@@ -177,6 +177,7 @@
 
 					// recursively build header with dropMenus from markupset
 					function dropMenus(markupSet) {
+						console.log("ciao");
 						var ul = $('<ul></ul>'), i = 0;
 						$('li:hover > ul', ul).css('display', 'block');
 						$.each(markupSet, function() {
