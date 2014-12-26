@@ -149,8 +149,8 @@
 						$$.addClass("markItUpEditor");
 
 						// add the header before the textarea
-						header = $('<div class="markItUpHeader"></div>').insertBefore($$);
-						$(dropMenus(options.markupSet)).appendTo(header);
+						header = $(createEditor());
+						header.insertBefore($$);
 
 						// listen key events
 						$$.bind('keydown.markItUp', keyPressed).bind('keyup', keyPressed);
@@ -175,49 +175,35 @@
 						}
 					}
 
-					// recursively build header with dropMenus from markupset
-					function dropMenus(markupSet) {
-						console.log("ciao");
-						var ul = $('<ul></ul>'), i = 0;
-						$('li:hover > ul', ul).css('display', 'block');
-						$.each(markupSet, function() {
-							var button = this, li;
-							if (button.separator) {
-								li = $('<li class="markItUpSeparator">'+(button.separator||'')+'</li>').appendTo(ul);
-							} else {
-								i++;
-								button.i = i;
-								var viewer = new $.markItUp.ElementViewer(options.template,button);
-								li = $(viewer.render())
-								.bind("contextmenu.markItUp", function() { // prevent contextmenu on mac and allow ctrl+click
-									return false;
-								}).bind('click.markItUp', function(e) {
-									e.preventDefault();
-								}).bind("focusin.markItUp", function(){
-									$$.focus();
-								}).bind('mouseup', function() {
-									if (button.call) {
-										eval(button.call)();
-									}
-									setTimeout(function() { markup(button) },1);
-									return false;
-								}).bind('mouseenter.markItUp', function() {
-									$('> ul', this).show();
-									$(document).one('click', function() { // close dropmenu if click outside
-										$('ul ul', header).hide();
-									}
-								);
-							}).bind('mouseleave.markItUp', function() {
-								$('> ul', this).hide();
-							}).appendTo(ul);
-							if (button.dropMenu) {
-								levels.push(i);
-								$(li).addClass('markItUpDropMenu').append(dropMenus(button.dropMenu));
-							}
-						}
+				function createEditor() {
+					var div = $(options.template.createToolbar);
+					var i = 0;
+					var groups = options.markupSet;
+					$.each(groups, function() {
+						var buttonGroup = this;
+						var groupDiv = $(options.template.createButtonGroup);
+						$.each(buttonGroup, function(){
+							var button = this;
+							i++;
+							var viewer = new $.markItUp.ElementViewer(options.template.createButton,button);
+							$(viewer.render())
+							.bind("contextmenu.markItUp", function() { // prevent contextmenu on mac and allow ctrl+click
+								return false;
+							}).bind('click.markItUp', function(e) {
+								e.preventDefault();
+							}).bind("focusin.markItUp", function(){
+								$$.focus();
+							}).bind('mouseup', function() {
+								if (button.call) {
+									eval(button.call)();
+								}
+								setTimeout(function() { markup(button) },1);
+								return false;
+							}).appendTo(groupDiv);
+						});
+						groupDiv.appendTo(div);
 					});
-					levels.pop();
-					return ul;
+					return div;
 				}
 
 				// markItUp! markups

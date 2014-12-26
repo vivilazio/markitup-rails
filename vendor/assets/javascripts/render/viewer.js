@@ -37,10 +37,15 @@
 
   $.markItUp.ElementViewer = ElementViewer;
 
-  var bootstrapEditor = function() {
-    return '<li class="markItUpButton markItUpButton'+this.i+' '+(this.className||'')+'"><a href="" '+(this.key ? 'accesskey="'+this.key+'"' : '')+' title="'+(this.key ? (this.name||'')+' [Ctrl+'+this.key+']' : '')+'" class="btn btn-sm btn-default">'+this.name+'</a></li>';
+  var createButton = function() {
+    return '<a href="" '+(this.key ? 'accesskey="'+this.key+'"' : '')+' title="'+(this.key ? (this.name||'')+' [Ctrl+'+this.key+']' : '')+'" class="btn btn-sm btn-default btn-'+this.i+'"><span class="glyphicon glyphicon-'+this.icon+'"></span></a>';
   };
 
+  var bootstrapEditor = {
+    createButton: createButton,
+    createToolbar: '<div class="btn-toolbar" role="toolbar" aria-label="..."></div>',
+    createButtonGroup: '<div class="btn-group" role="group" aria-label="..."></div>'
+  };
   $.markItUp.templates = {};
   $.markItUp.templates.default = bootstrapEditor;
 })(jQuery);
