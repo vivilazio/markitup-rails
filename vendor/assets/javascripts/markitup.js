@@ -48,11 +48,29 @@
 		resizeHandle:			true,
 		beforeInsert:			'',
 		afterInsert:			'',
-		onEnter:				{},
-		onShiftEnter:			{},
+		onEnter:				{keepDefault:false, replaceWith:'\n\n'},
+		onShiftEnter:			{keepDefault:false, replaceWith:'\n'},
 		onCtrlEnter:			{},
 		onTab:					{},
-		markupSet:			[	{ /* set */ } ],
+		markupSet: [
+			[
+		{name:'Header 2', key:'1', openWith:'h2(!(([![Class]!]))!). ', placeHolder:'insert here the title...', icon: "header" },
+				{name:'Header 3', key:'2', openWith:'h3(!(([![Class]!]))!). '
+			, placeHolder:'insert here the title...', icon: "font" }
+			],
+			[
+		{name:'Bold', key:'B', closeWith:'*', openWith:'*', icon: "bold"},
+	{name:'Italic', key:'I', closeWith:'_', openWith:'_', icon: "italic"},
+			],
+			[
+		{name:'Unordered List', key:'U', openWith:'(!(* |!|*)!)', icon: "list"},
+	{name:'Ordered List', key:'O', openWith:'(!(# |!|#)!)', icon: "th-list"}
+			],
+			[
+		{name:'Link', key:'L', openWith:'"', closeWith:'([![Title]!])":[![Link:!:http://]!]', placeHolder:'text to link goes here', icon: "link" },
+		{name:'Cite', key:'Q', openWith:'bq(!(([![Class]!]))!). ', icon: "comment"}
+		]
+		],
 		template: $.markItUp.templates.default
 	};
 	$.extend(options, settings, extraSettings);
@@ -555,7 +573,7 @@ function keyPressed(e) {
 
 	if (e.type === 'keydown') {
 		if (ctrlKey === true) {
-			li = $('a[accesskey="'+((e.keyCode == 13) ? '\\n' : String.fromCharCode(e.keyCode))+'"]', header).parent('li');
+			var li = $('a[accesskey="'+((e.keyCode == 13) ? '\\n' : String.fromCharCode(e.keyCode))+'"]', header);
 			if (li.length !== 0) {
 				ctrlKey = false;
 				setTimeout(function() {

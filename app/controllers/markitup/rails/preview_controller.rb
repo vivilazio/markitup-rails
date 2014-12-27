@@ -7,6 +7,9 @@ module Markitup::Rails
 
     def preview
       @content = Markitup::Rails.configuration.formatter.call(params[:data])
+      if params[:nolayout]
+        render :preview, layout: false
+      end
     end
   end
 
